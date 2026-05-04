@@ -1,0 +1,11 @@
+{
+  "name": "Metalex Tours",
+  "description": "Premium travel and tour company based in Mpraeso, Ghana. Offering flights, hotels, visa assistance, and specialized tours.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "AI-powered travel consultant",
+    "Smart quote generator"
+  ]
+}

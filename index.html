@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metalex Tours | Premium Ghana Travel & Tours</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #1a3d2b;
+            --accent: #c9a84c;
+            --bg: #fdf8f2;
+            --text: #1c1c1c;
+            --white: #ffffff;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Utils */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-align: center;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-gold {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(201, 168, 76, 0.3);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent);
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        /* 1. NAVIGATION */
+        nav {
+            background-color: rgba(26, 61, 43, 0.95);
+            backdrop-filter: blur(10px);
+            color: var(--white);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent);
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+
+        /* 2. HERO SECTION WITH SLIDESHOW */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .hero-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(26, 61, 43, 0.8) 100%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUpFade 1.2s forwards ease-out;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        @keyframes slideUpFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(3.5rem, 10vw, 6rem);
+            margin-bottom: 1.5rem;
+            line-height: 1;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* 3. STATS BAR */
+        .stats {
+            background-color: var(--primary);
+            padding: 3rem 0;
+            color: var(--accent);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1rem;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 4. TOURS SECTION */
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-header .divider {
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            margin: 0 auto;
+        }
+
+        .tours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tour-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-10px);
+            border: 1px solid var(--accent);
+        }
+
+        .tour-img {
+            height: 200px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .tour-content {
+            padding: 1.5rem;
+        }
+
+        .tour-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tour-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .tour-card p {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            height: 60px;
+            overflow: hidden;
+        }
+
+        .tour-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tour-price {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* 5. SERVICES SECTION */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            padding: 3rem 2rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .service-card:nth-child(odd) {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .service-card:nth-child(even) {
+            background-color: var(--white);
+            color: var(--primary);
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: var(--shadow);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .service-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        /* 6. AI TRAVEL CHATBOT */
+        .chat-section {
+            background-color: #f7f3ed;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background-color: var(--primary);
+            color: var(--accent);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 1rem;
+            border-radius: 15px;
+            font-size: 0.95rem;
+        }
+
+        .message.ai {
+            align-self: flex-start;
+            background-color: var(--primary);
+            color: var(--white);
+            border-bottom-left-radius: 2px;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background-color: var(--accent);
+            color: var(--primary);
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-suggestions {
+            padding: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            border-top: 1px solid #eee;
+        }
+
+        .suggestion-btn {
+            background: #eee;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .suggestion-btn:hover {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .chat-input {
+            padding: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .chat-input button {
+            background-color: var(--accent);
+            color: var(--primary);
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 5px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .typing {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+            display: none;
+        }
+
+        /* 7. AI QUOTE GENERATOR */
+        .quote-form {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            grid-column: span 2;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .quote-result-box {
+            grid-column: span 2;
+            margin-top: 2rem;
+            background: #fdfaf5;
+            border: 1px dashed var(--accent);
+            padding: 2rem;
+            border-radius: 8px;
+            display: none;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 8. ABOUT SECTION */
+        .about-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-strengths {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .about-strengths li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .checkmark {
+            color: var(--accent);
+            font-weight: 900;
+        }
+
+        .hours-box {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            border-left: 10px solid var(--accent);
+        }
+
+        .hours-box h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .hours-table tr {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .hours-table td {
+            padding: 0.8rem 0;
+        }
+
+        /* 9. CONTACT SECTION */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .contact-info a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .contact-form-simple {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-form-simple input, .contact-form-simple textarea {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .contact-map iframe {
+            border-radius: 12px;
+            filter: grayscale(0.2);
+        }
+
+        /* 10. FOOTER */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 5rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo h2 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        /* Animations and UX */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-weight: 900;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 992px) {
+            .about-split, .contact-grid, .quote-form {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                padding: 2rem;
+                text-align: center;
+                box-shadow: var(--shadow);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVIGATION -->
+    <nav id="navbar">
+        <div class="container">
+            <a href="#" class="logo">Metalex Tours</a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#tours">Tours</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#quote" class="btn btn-gold" style="padding: 0.5rem 1.2rem; margin-top: -5px;">Get a Quote</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 2. HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-slideshow" id="hero-slideshow">
+            <!-- Slides will be injected by JS -->
+        </div>
+        <div class="hero-content">
+            <h1>Experience The Heart Of Ghana</h1>
+            <p>From the mystical Odweanoma mountains to the majestic Boti falls, discover the untouched beauty of the Eastern Region with Metalex Tours.</p>
+            <div class="hero-btns">
+                <a href="#tours" class="btn btn-gold">Our Tour Packages</a>
+                <a href="#quote" class="btn btn-outline">Custom Itinerary</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. STATS BAR -->
+    <section class="stats">
+        <div class="container stats-grid">
+            <div class="stat-item">
+                <h3 class="counter" data-target="500">0</h3>
+                <p>Happy Travelers</p>
+            </div>
+            <div class="stat-item">
+                <h3 class="counter" data-target="50">0</h3>
+                <p>Tour Packages</p>
+            </div>
+            <div class="stat-item">
+                <h3 class="" data-target="7">7 Days</h3>
+                <p>A Week Service</p>
+            </div>
+            <div class="stat-item">
+                <h3 class="counter" data-target="10">0</h3>
+                <p>Years Experience</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. TOURS SECTION -->
+    <section class="section-padding fade-in" id="tours">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Popular Tours</h2>
+                <p>Hand-picked experiences that showcase the best of Ghana's heritage and nature.</p>
+                <div class="divider"></div>
+            </div>
+            <div class="tours-grid">
+                <!-- Card 1 -->
+                <div class="tour-card">
+                    <div class="tour-img" style="background-image: url('https://images.unsplash.com/photo-1590422996582-7ea40d0484cd?q=80&w=600&auto=format&fit=crop');"></div>
+                    <div class="tour-content">
+                        <div class="tour-meta">
+                            <span>🕒 3 Days</span>
+                            <span>📍 Kwahu Hills</span>
+                        </div>
+                        <h3>Odweanoma Paragliding Experience</h3>
+                        <p>Experience the thrill of flight from the paragliding takeoff point on Odweanoma Mountain. Breathtaking views included.</p>
+                        <div class="tour-footer">
+                            <span class="tour-price">GHS 1,500</span>
+                            <a href="#contact" class="btn btn-gold" style="padding: 0.4rem 1rem;">Call to Book</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="tour-card">
+                    <div class="tour-img" style="background-image: url('https://images.unsplash.com/photo-1544986581-efac024faf62?q=80&w=600&auto=format&fit=crop');"></div>
+                    <div class="tour-content">
+                        <div class="tour-meta">
+                            <span>🕒 1 Day</span>
+                            <span>📍 Twenedurase</span>
+                        </div>
+                        <h3>Mystical Cave Cultural Tour</h3>
+                        <p>Delve into the spiritual significance of the Twenedurase caves with local historians and elders.</p>
+                        <div class="tour-footer">
+                            <span class="tour-price">GHS 950</span>
+                            <a href="#contact" class="btn btn-gold" style="padding: 0.4rem 1rem;">Call to Book</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="tour-card">
+                    <div class="tour-img" style="background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=600&auto=format&fit=crop');"></div>
+                    <div class="tour-content">
+                        <div class="tour-meta">
+                            <span>🕒 1 Day</span>
+                            <span>📍 Akim Oda</span>
+                        </div>
+                        <h3>The Big Tree Expedition</h3>
+                        <p>Visit West Africa's largest tree in the Esen Epam Forest Reserve. A true natural wonder of the Eastern Region.</p>
+                        <div class="tour-footer">
+                            <span class="tour-price">GHS 800</span>
+                            <a href="#contact" class="btn btn-gold" style="padding: 0.4rem 1rem;">Call to Book</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="tour-card">
+                    <div class="tour-img" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fee74a62?q=80&w=600&auto=format&fit=crop');"></div>
+                    <div class="tour-content">
+                        <div class="tour-meta">
+                            <span>🕒 1 Day</span>
+                            <span>📍 Boti Falls</span>
+                        </div>
+                        <h3>Double Boti Falls & Umbrella Rock</h3>
+                        <p>See the 'male' and 'female' falls, then hike to the iconic Umbrella Rock for a panoramic forest view.</p>
+                        <div class="tour-footer">
+                            <span class="tour-price">GHS 1,100</span>
+                            <a href="#contact" class="btn btn-gold" style="padding: 0.4rem 1rem;">Call to Book</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 5 -->
+                <div class="tour-card">
+                    <div class="tour-img" style="background-image: url('https://images.unsplash.com/photo-1523805009345-7448845a9e13?q=80&w=600&auto=format&fit=crop');"></div>
+                    <div class="tour-content">
+                        <div class="tour-meta">
+                            <span>🕒 2 Days</span>
+                            <span>📍 Kwahu Tafo</span>
+                        </div>
+                        <h3>Buruku Rock Heritage Tour</h3>
+                        <p>Climb the spiritual Buruku rock and learn about the ancient lore of the Kwahu people.</p>
+                        <div class="tour-footer">
+                            <span class="tour-price">GHS 1,350</span>
+                            <a href="#contact" class="btn btn-gold" style="padding: 0.4rem 1rem;">Call to Book</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 6 -->
+                <div class="tour-card">
+                    <div class="tour-img" style="background-image: url('https://images.unsplash.com/photo-1590422996582-7ea40d0484cd?q=80&w=600&auto=format&fit=crop');"></div>
+                    <div class="tour-content">
+                        <div class="tour-meta">
+                            <span>🕒 1 Day</span>
+                            <span>📍 Obo Kwahu</span>
+                        </div>
+                        <h3>Obo Hanging Gardens & Town Walk</h3>
+                        <p>Explore the uniquely architecturally designed Obo town and its beautiful hanging garden retreats.</p>
+                        <div class="tour-footer">
+                            <span class="tour-price">GHS 750</span>
+                            <a href="#contact" class="btn btn-gold" style="padding: 0.4rem 1rem;">Call to Book</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. SERVICES SECTION -->
+    <section class="section-padding fade-in" id="services" style="background-color: var(--white);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>Everything you need for a seamless travel experience under one roof.</p>
+                <div class="divider"></div>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <span class="service-icon">🏨</span>
+                    <h3>Hotel Booking</h3>
+                    <p>Strategic accommodation from luxury hotels to cozy mountain lodges in Kwahu.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🛡</span>
+                    <h3>Travel Insurance</h3>
+                    <p>Travel with peace of mind knowing you're covered against the unexpected.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🚗</span>
+                    <h3>Car Rental</h3>
+                    <p>Reliability vehicles with or without drivers for your local explorations.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🗺</span>
+                    <h3>Tourist Tours</h3>
+                    <p>Expertly curated tours led by local guides who know every hidden gem.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🤝</span>
+                    <h3>Visa Assistance</h3>
+                    <p>Professional guidance and support for your travel documentation and visa applications.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🍱</span>
+                    <h3>Local Cuisine</h3>
+                    <p>Authentic food experiences featuring traditional Eastern region delicacies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. AI TRAVEL CHATBOT -->
+    <section class="section-padding chat-section fade-in" id="chat">
+        <div class="container">
+            <div class="section-header">
+                <h2>Chat With Our AI Travel Assistant</h2>
+                <p>Instant answers to your travel questions, 24/7.</p>
+                <div class="divider"></div>
+            </div>
+            <div class="chat-container">
+                <div class="chat-header">
+                    <span style="font-size: 1.5rem;">🌍</span>
+                    <div>
+                        <strong style="display: block;">Metalex AI Guide</strong>
+                        <small style="opacity: 0.8;">Online | Ready to help</small>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message ai">
+                        Akwaaba! I'm your Metalex Tours virtual assistant. How can I help you plan your Ghana adventure today?
+                    </div>
+                </div>
+                <div class="typing" id="typing-indicator">Metalex AI is typing...</div>
+                <div class="chat-suggestions">
+                    <button class="suggestion-btn" onclick="sendSuggestion('What tours do you offer?')">What tours do you offer?</button>
+                    <button class="suggestion-btn" onclick="sendSuggestion('How do I book?')">How do I book?</button>
+                    <button class="suggestion-btn" onclick="sendSuggestion('Do you do visa assistance?')">Do you do visa assistance?</button>
+                </div>
+                <form class="chat-input" id="chat-form">
+                    <input type="text" id="chat-input" placeholder="Ask about tours, flights, or visas..." required>
+                    <button type="submit" id="chat-send">Send</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. AI QUOTE GENERATOR -->
+    <section class="section-padding fade-in" id="quote">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get Your Personalised Travel Quote</h2>
+                <p>Fill out the form below and let our AI craft the perfect itinerary for you.</p>
+                <div class="divider"></div>
+            </div>
+            <form class="quote-form" id="quote-form">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" id="q-fname" required>
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" id="q-lname" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="q-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="q-phone" required>
+                </div>
+                <div class="form-group">
+                    <label>Trip Type</label>
+                    <select id="q-triptype">
+                        <option value="Vacation">Vacation</option>
+                        <option value="Business Trip">Business Trip</option>
+                        <option value="Visa Assistance">Visa Assistance</option>
+                        <option value="Family Visit">Family Visit</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Destination</label>
+                    <input type="text" id="q-dest" placeholder="e.g. Accra, Cape Coast, Kumasi, or International" required>
+                </div>
+                <div class="form-group">
+                    <label>Departure Date</label>
+                    <input type="date" id="q-dep">
+                </div>
+                <div class="form-group">
+                    <label>Return Date</label>
+                    <input type="date" id="q-ret">
+                </div>
+                <div class="form-group full">
+                    <label>Services Needed</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item"><input type="checkbox" name="service" value="Hotel Booking"> Hotel Booking</label>
+                        <label class="checkbox-item"><input type="checkbox" name="service" value="Travel Insurance"> Travel Insurance</label>
+                        <label class="checkbox-item"><input type="checkbox" name="service" value="Car Rental"> Car Rental</label>
+                        <label class="checkbox-item"><input type="checkbox" name="service" value="Tourist Tour"> Tourist Tour</label>
+                        <label class="checkbox-item"><input type="checkbox" name="service" value="Visa Assistance"> Visa Assistance</label>
+                        <label class="checkbox-item"><input type="checkbox" name="service" value="Local Guide"> Local Guide</label>
+                    </div>
+                </div>
+                <div class="form-group full">
+                    <label>Special Requests</label>
+                    <textarea id="q-req" rows="4" placeholder="Anything else we should know?"></textarea>
+                </div>
+                <div class="form-group full" style="text-align: center;">
+                    <button type="submit" class="btn btn-gold" id="quote-btn">
+                        <span id="btn-text">Generate My Quote</span>
+                        <div class="spinner" id="btn-spinner"></div>
+                    </button>
+                    <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.6;">Powered by Metalex AI Intelligence</p>
+                </div>
+
+                <div class="quote-result-box" id="quote-result">
+                    <button class="copy-btn" id="copy-quote">Copy Quote</button>
+                    <div id="quote-content" style="white-space: pre-line;"></div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- 8. ABOUT SECTION -->
+    <section class="section-padding fade-in" id="about" style="background-color: var(--white);">
+        <div class="container about-split">
+            <div>
+                <div class="section-header" style="text-align: left;">
+                    <h2 style="margin-left: 0;">About Metalex Tours</h2>
+                    <div class="divider" style="margin: 0;"></div>
+                </div>
+                <p style="margin-bottom: 2rem;">Metalex Tours is a premier travel agency based in Mpraeso, in the heart of Ghana's Eastern Region. We specialize in creating unforgettable experiences, bridging the gap between local heritage and modern travel convenience.</p>
+                <p>Whether you are looking for a weekend getaway in the Kwahu hills, specialized visa assistance, or international flight bookings, our dedicated team ensures every detail of your journey is handled with professionalism and care.</p>
+                
+                <ul class="about-strengths">
+                    <li><span class="checkmark">✔</span> Local Expertise: We know the hidden gems of Mpraeso and beyond.</li>
+                    <li><span class="checkmark">✔</span> Integrity: Transparent pricing and honest travel consultation.</li>
+                    <li><span class="checkmark">✔</span> Availability: Open 7 days a week from dawn to late evening.</li>
+                    <li><span class="checkmark">✔</span> Personal Touch: Every traveler is treated like family.</li>
+                </ul>
+            </div>
+            <div class="hours-box">
+                <h3>Our Office Hours</h3>
+                <table class="hours-table">
+                    <tr><td>Monday</td><td>6:00 AM – 10:00 PM</td></tr>
+                    <tr><td>Tuesday</td><td>6:00 AM – 10:00 PM</td></tr>
+                    <tr><td>Wednesday</td><td>6:00 AM – 10:00 PM</td></tr>
+                    <tr><td>Thursday</td><td>6:00 AM – 10:00 PM</td></tr>
+                    <tr><td>Friday</td><td>6:00 AM – 10:00 PM</td></tr>
+                    <tr><td>Saturday</td><td>6:00 AM – 10:00 PM</td></tr>
+                    <tr><td>Sunday</td><td>6:00 AM – 10:00 PM</td></tr>
+                </table>
+                <p style="margin-top: 1.5rem; font-size: 0.9rem; font-style: italic; opacity: 0.8;">Visit us: Atibie to, Nkawkaw - New Abirem Rd, Mpraeso.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. CONTACT SECTION -->
+    <section class="section-padding fade-in" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <p>Have questions? We're here to help you start your journey.</p>
+                <div class="divider"></div>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Contact Details</h3>
+                    <p style="margin-bottom: 1rem;"><strong>📍 Address:</strong><br>Atibie to, Nkawkaw - New Abirem Rd,<br>Mpraeso, Eastern Region, Ghana</p>
+                    <p style="margin-bottom: 1rem;"><strong>📞 Phone:</strong><br><a href="tel:0248363720">024 836 3720</a></p>
+                    <p style="margin-bottom: 1rem;"><strong>⏰ Hours:</strong><br>Mon – Sun, 6:00 AM – 10:00 PM</p>
+                    <div style="margin-top: 2rem;">
+                        <a href="#quote" class="btn btn-gold">Send Inquiry</a>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Message Us</h3>
+                    <form class="contact-form-simple" onsubmit="event.preventDefault(); alert('Thank you! We\'ll be in touch within 24 hours.'); this.reset();">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <textarea rows="5" placeholder="How can we help?" required></textarea>
+                        <button type="submit" class="btn btn-gold">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-map">
+                    <iframe 
+                        src="https://maps.google.com/maps?q=Mpraeso,+Eastern+Region,+Ghana&output=embed" 
+                        width="100%" 
+                        height="300" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-logo">
+                    <h2>Metalex Tours</h2>
+                    <p>"Your Journey Begins Here"</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent); margin-bottom: 1.5rem;">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#tours">Tours</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent); margin-bottom: 1.5rem;">Our Services</h4>
+                    <ul class="footer-links" style="font-size: 0.9rem;">
+                        <li>Flight Tickets</li>
+                        <li>Visa Assistance</li>
+                        <li>Tourist Tours</li>
+                        <li>Hotel Booking</li>
+                        <li>Car Rental</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent); margin-bottom: 1.5rem;">Connect</h4>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Mpraeso, Eastern Region, Ghana</p>
+                    <p style="font-size: 1.1rem; font-weight: 700; color: var(--accent);">024 836 3720</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Metalex Tours. All rights reserved. Designed with ❤️ in Ghana.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCROLL TO TOP -->
+    <a href="#" class="scroll-top" id="scroll-top">↑</a>
+
+    <script>
+        // === CONFIGURATION ===
+        // NOTE: Replace "YOUR_API_KEY_HERE" with your actual Gemini API key.
+        // In this environment, we automatically use the injected key if the placeholder isn't updated.
+        const GEMINI_API_KEY = "YOUR_API_KEY_HERE".startsWith("YOUR") 
+            ? (typeof process !== "undefined" ? process.env.GEMINI_API_KEY : "") 
+            : "YOUR_API_KEY_HERE";
+        
+        const SYSTEM_PROMPT = "You are a helpful and friendly travel consultant for Metalex Tours, located in Mpraeso, Eastern Region, Ghana. You help customers plan trips, answer questions about tours (Odweanoma Mountain, Mystical Cave, Boti Falls, Buruku Rock), prices, visa assistance, hotel bookings, and car rentals. Always be warm, professional, and encourage customers to call 024 836 3720 or email info@metalextours.com. Keep responses concise and helpful. NOTE: We do NOT handle flight tickets.";
+
+        // === HERO SLIDESHOW ===
+        const heroImages = [
+            'https://images.unsplash.com/photo-1590422996582-7ea40d0484cd?q=80&w=1920&auto=format&fit=crop', // Landscape
+            'https://images.unsplash.com/photo-1544986581-efac024faf62?q=80&w=1920&auto=format&fit=crop', // Forest
+            'https://images.unsplash.com/photo-1500382017468-9049fee74a62?q=80&w=1920&auto=format&fit=crop', // Mountain
+            'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1920&auto=format&fit=crop', // Nature
+        ];
+
+        function initHeroSlideshow() {
+            const container = document.getElementById('hero-slideshow');
+            heroImages.forEach((src, index) => {
+                const div = document.createElement('div');
+                div.className = `slide ${index === 0 ? 'active' : ''}`;
+                div.style.backgroundImage = `url('${src}')`;
+                container.appendChild(div);
+            });
+
+            let current = 0;
+            setInterval(() => {
+                const slides = document.querySelectorAll('.slide');
+                slides[current].classList.remove('active');
+                current = (current + 1) % slides.length;
+                slides[current].classList.add('active');
+            }, 6000);
+        }
+        initHeroSlideshow();
+
+        // === AI CHATBOT LOGIC ===
+        const chatMessages = document.getElementById('chat-messages');
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const typingIndicator = document.getElementById('typing-indicator');
+        
+        let conversationHistory = [];
+
+        async function callGemini(prompt, isChat = false) {
+            if (!GEMINI_API_KEY || GEMINI_API_KEY === "YOUR_API_KEY_HERE") {
+                return "API key missing. Please provide your Gemini API key in the code to use the AI features.";
+            }
+
+            try {
+                let bodyData;
+                if (isChat) {
+                    bodyData = {
+                        contents: conversationHistory,
+                        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+                        generationConfig: { temperature: 0.7, maxOutputTokens: 800 }
+                    };
+                } else {
+                    bodyData = {
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: { temperature: 0.7, maxOutputTokens: 1000 }
+                    };
+                }
+
+                const response = await fetch(
+                    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(bodyData)
+                    }
+                );
+
+                const data = await response.json();
+                if (data.error) throw new Error(data.error.message);
+                
+                const textOutput = data.candidates[0].content.parts[0].text;
+                
+                if (isChat) {
+                    conversationHistory.push({ role: 'model', parts: [{ text: textOutput }] });
+                }
+                
+                return textOutput;
+            } catch (error) {
+                console.error("Gemini Error:", error);
+                return "I'm sorry, I'm having trouble connecting right now. Please call us at 024 836 3720 for urgent inquiries.";
+            }
+        }
+
+        async function handleChat(msg) {
+            // Append User Message
+            const userDiv = document.createElement('div');
+            userDiv.className = 'message user';
+            userDiv.innerText = msg;
+            chatMessages.appendChild(userDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Prepare for AI
+            conversationHistory.push({ role: 'user', parts: [{ text: msg }] });
+            typingIndicator.style.display = 'block';
+
+            const responseText = await callGemini(msg, true);
+            
+            typingIndicator.style.display = 'none';
+
+            // Append AI Message
+            const aiDiv = document.createElement('div');
+            aiDiv.className = 'message ai';
+            aiDiv.innerText = responseText;
+            chatMessages.appendChild(aiDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const msg = chatInput.value;
+            if (!msg) return;
+            handleChat(msg);
+            chatInput.value = '';
+        });
+
+        function sendSuggestion(msg) {
+            handleChat(msg);
+        }
+
+        // === AI QUOTE GENERATOR LOGIC ===
+        const quoteForm = document.getElementById('quote-form');
+        const quoteResult = document.getElementById('quote-result');
+        const quoteContent = document.getElementById('quote-content');
+        const quoteBtn = document.getElementById('quote-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnSpinner = document.getElementById('btn-spinner');
+
+        quoteForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fname = document.getElementById('q-fname').value;
+            const lname = document.getElementById('q-lname').value;
+            const tripType = document.getElementById('q-triptype').value;
+            const destination = document.getElementById('q-dest').value;
+            const departure = document.getElementById('q-dep').value;
+            const returnDate = document.getElementById('q-ret').value;
+            const special = document.getElementById('q-req').value;
+
+            const selectedServices = Array.from(document.querySelectorAll('input[name="service"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+
+            const prompt = `You are a travel consultant at Metalex Tours in Ghana. A customer has requested a travel quote. Generate a professional, friendly, and detailed quote response. 
+            Customer details: 
+            Name: ${fname} ${lname}, 
+            Trip Type: ${tripType}, 
+            Services: ${selectedServices || 'Standard Assistance'}, 
+            Destination: ${destination}, 
+            Dates: ${departure} to ${returnDate}, 
+            Special Requests: ${special}. 
+            Include: a warm greeting, 3 suggested package options with price ranges in GHS (Budget, standard, luxury), what is included, and a call to action to contact 024 836 3720. Format it neatly with line breaks. Use bullet points where appropriate.`;
+
+            // UI Feedback
+            btnText.style.display = 'none';
+            btnSpinner.style.display = 'block';
+            quoteBtn.disabled = true;
+
+            const result = await callGemini(prompt);
+
+            quoteContent.innerText = result;
+            quoteResult.style.display = 'block';
+            
+            btnText.style.display = 'block';
+            btnSpinner.style.display = 'none';
+            quoteBtn.disabled = false;
+            
+            quoteResult.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.getElementById('copy-quote').addEventListener('click', (e) => {
+            e.preventDefault();
+            navigator.clipboard.writeText(quoteContent.innerText);
+            alert('Quote copied to clipboard!');
+        });
+
+        // === NAVIGATION & UI UX ===
+        const hamburger = document.getElementById('hamburger');
+        const navLinksList = document.getElementById('nav-links');
+        const navAnchorLinks = document.querySelectorAll('.nav-links a');
+
+        hamburger.addEventListener('click', () => {
+            navLinksList.classList.toggle('active');
+        });
+
+        // Active link on scroll
+        const sections = document.querySelectorAll('section');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navAnchorLinks.forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === `#${current}`) {
+                    a.classList.add('active');
+                }
+            });
+
+            // Scroll top button
+            const scrollTop = document.getElementById('scroll-top');
+            if (window.pageYOffset > 500) {
+                scrollTop.classList.add('show');
+            } else {
+                scrollTop.classList.remove('show');
+            }
+        });
+
+        // Interception Observer for Fade-In
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                    
+                    // Trigger counters if visible
+                    if (entry.target.classList.contains('stats')) {
+                        startCounters();
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .stats').forEach(el => observer.observe(el));
+
+        // Stats Counter
+        function startCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / 50;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 40);
+                    } else {
+                        counter.innerText = target + '+';
+                    }
+                };
+                updateCount();
+            });
+        }
+    </script>
+</body>
+</html>
